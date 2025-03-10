@@ -82,7 +82,7 @@ struct CreateLandlordView: View {
                 phone: phone,
                 properties: landlord.properties
             )
-            dataManager.updateLandlord(updatedLandlord)
+            dataManager.lordUpdate(updatedLandlord)
         } else {
             // Add new landlord
             let newLandlord = Landlord(
@@ -91,7 +91,7 @@ struct CreateLandlordView: View {
                 phone: phone,
                 properties: []
             )
-            dataManager.addLandlord(newLandlord)
+            dataManager.lordAdd(newLandlord)
         }
         showCreateLandlordView = false
     }

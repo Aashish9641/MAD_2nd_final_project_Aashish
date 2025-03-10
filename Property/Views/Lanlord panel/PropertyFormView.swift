@@ -1,10 +1,3 @@
-//
-//  PropertyFormView.swift
-//  Property
-//
-//  Created by NAAMI COLLEGE on 07/03/2025.
-//
-
 import UIKit
 import SwiftUI
 struct PropertyFormView: View {
@@ -69,11 +62,11 @@ struct PropertyFormView: View {
         
         if isEditing, let property = selectedProperty {
             let updatedProperty = Property(id: property.id, address: address, description: description, price: priceValue)
-            dataManager.updateProperty(updatedProperty, for: landlord.id)
+            dataManager.propModify(updatedProperty, for: landlord.id)
             successMessage = "Property updated successfully!"
         } else {
             let newProperty = Property(id: UUID().uuidString, address: address, description: description, price: priceValue)
-            dataManager.addProperty(newProperty, for: landlord.id)
+            dataManager.propPlus(newProperty, for: landlord.id)
             successMessage = "Property added successfully!"
         }
         

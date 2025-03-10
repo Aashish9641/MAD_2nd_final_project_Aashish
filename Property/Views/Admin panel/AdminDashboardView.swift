@@ -103,7 +103,7 @@ struct AdminDashboardView: View {
     // Delete Selected Landlords
     func deleteSelectedLandlords() {
         for id in selectedLandlordsForDeletion {
-            dataManager.deleteLandlord(id: id)
+            dataManager.lordRemove(id: id)
         }
         selectedLandlordsForDeletion.removeAll()
     }

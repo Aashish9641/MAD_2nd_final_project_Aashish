@@ -71,6 +71,7 @@ struct PropertyCardUserView: View {
         .overlay(
             Group {
                 if showSuccessMessage {
+                    
                     SuccessMessageView()
                         .transition(.opacity)
                         .onAppear {

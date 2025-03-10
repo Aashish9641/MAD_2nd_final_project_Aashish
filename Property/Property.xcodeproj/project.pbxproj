@@ -11,6 +11,8 @@
 		C56D69372D7AF4090049BE65 /* PropertyFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56D69362D7AF4090049BE65 /* PropertyFormView.swift */; };
 		C571787A2D781027004AA19E /* LandlordLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57178792D781027004AA19E /* LandlordLogin.swift */; };
 		C5727DC22D7D307000234A06 /* ButtonCus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5727DC12D7D307000234A06 /* ButtonCus.swift */; };
+		C572D68A2D7E88D3008D3AD1 /* UserRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = C572D6892D7E88D3008D3AD1 /* UserRegister.swift */; };
+		C572D68D2D7E88ED008D3AD1 /* UserLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C572D68C2D7E88ED008D3AD1 /* UserLogin.swift */; };
 		C577D14C2D76C912003ABEEB /* PropertyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C577D14B2D76C912003ABEEB /* PropertyApp.swift */; };
 		C577D14E2D76C912003ABEEB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C577D14D2D76C912003ABEEB /* ContentView.swift */; };
 		C577D1502D76C913003ABEEB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C577D14F2D76C913003ABEEB /* Assets.xcassets */; };
@@ -50,6 +52,8 @@
 		C56D69362D7AF4090049BE65 /* PropertyFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyFormView.swift; sourceTree = "<group>"; };
 		C57178792D781027004AA19E /* LandlordLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandlordLogin.swift; sourceTree = "<group>"; };
 		C5727DC12D7D307000234A06 /* ButtonCus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCus.swift; sourceTree = "<group>"; };
+		C572D6892D7E88D3008D3AD1 /* UserRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegister.swift; sourceTree = "<group>"; };
+		C572D68C2D7E88ED008D3AD1 /* UserLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLogin.swift; sourceTree = "<group>"; };
 		C577D1482D76C912003ABEEB /* Property.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Property.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C577D14B2D76C912003ABEEB /* PropertyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyApp.swift; sourceTree = "<group>"; };
 		C577D14D2D76C912003ABEEB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -65,7 +69,7 @@
 		C577D1822D76DB60003ABEEB /* AdminLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminLoginView.swift; sourceTree = "<group>"; };
 		C577D1842D76DB9B003ABEEB /* AdminDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminDashboardView.swift; sourceTree = "<group>"; };
 		C577D1882D76DC0C003ABEEB /* CreateLandlordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLandlordView.swift; sourceTree = "<group>"; };
-		C577D1942D76DCEA003ABEEB /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		C577D1942D76DCEA003ABEEB /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 1; };
 		C577D1962D76DDF2003ABEEB /* LandlordDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandlordDashboard.swift; sourceTree = "<group>"; };
 		C577D1982D76DE24003ABEEB /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,6 +125,8 @@
 			isa = PBXGroup;
 			children = (
 				C577D1982D76DE24003ABEEB /* UserView.swift */,
+				C572D6892D7E88D3008D3AD1 /* UserRegister.swift */,
+				C572D68C2D7E88ED008D3AD1 /* UserLogin.swift */,
 			);
 			path = "User panel";
 			sourceTree = "<group>";
@@ -341,7 +347,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C572D68A2D7E88D3008D3AD1 /* UserRegister.swift in Sources */,
 				C577D1992D76DE24003ABEEB /* UserView.swift in Sources */,
+				C572D68D2D7E88ED008D3AD1 /* UserLogin.swift in Sources */,
 				C5727DC22D7D307000234A06 /* ButtonCus.swift in Sources */,
 				C56D69252D7AB2CA0049BE65 /* LandlordRow.swift in Sources */,
 				C56D69372D7AF4090049BE65 /* PropertyFormView.swift in Sources */,

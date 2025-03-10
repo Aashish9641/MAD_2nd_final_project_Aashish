@@ -55,14 +55,14 @@ struct LandlordDashboard: View {
             if isSelectModeActive {
                 HStack {
                     Button(action: {
-                        if selectedProperties.count == dataManager.getProperties(for: landlord.id).count {
+                        if selectedProperties.count == dataManager.propG(for: landlord.id).count {
                             selectedProperties.removeAll() // Deselect all
                         } else {
                             // Select all
-                            selectedProperties = Set(dataManager.getProperties(for: landlord.id).map { $0.id })
+                            selectedProperties = Set(dataManager.propG(for: landlord.id).map { $0.id })
                         }
                     }) {
-                        Text(selectedProperties.count == dataManager.getProperties(for: landlord.id).count ? "Deselect All" : "Select All")
+                        Text(selectedProperties.count == dataManager.propG(for: landlord.id).count ? "Deselect All" : "Select All")
                             .font(.subheadline.bold())
                             .foregroundColor(.blue)
                             .padding(.vertical, 8)
@@ -77,7 +77,7 @@ struct LandlordDashboard: View {
                         Button(action: {
                             // Delete selected properties
                             for propertyId in selectedProperties {
-                                dataManager.deleteProperty(propertyId, for: landlord.id)
+                                dataManager.propRemove(propertyId, for: landlord.id)
                             }
                             selectedProperties.removeAll()
                             successMessage = "Properties deleted successfully!"
@@ -100,7 +100,7 @@ struct LandlordDashboard: View {
             
             // Property List
             List {
-                ForEach(dataManager.getProperties(for: landlord.id), id: \.id) { property in
+                ForEach(dataManager.propG(for: landlord.id), id: \.id) { property in
                     PropertyCard(
                         property: property,
                         isSelected: selectedProperties.contains(property.id),
@@ -110,7 +110,7 @@ struct LandlordDashboard: View {
                             showPropertyForm = true
                         },
                         onDelete: {
-                            dataManager.deleteProperty(property.id, for: landlord.id)
+                            dataManager.propRemove(property.id, for: landlord.id)
                             successMessage = "Property deleted successfully!"
                             showSuccessMessage = true
                         },

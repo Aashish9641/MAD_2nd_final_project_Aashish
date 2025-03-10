@@ -38,9 +38,9 @@ struct LandlordLogin: View {
                 
                 // Login Button
                 Button("Login") {
-                    if dataManager.validateLandlord(username: username, email: email) {
+                    if dataManager.lordValidation(username: username, email: email) {
                         // Get the logged-in landlord
-                        loggedInLandlord = dataManager.getLandlord(username: username, email: email)
+                        loggedInLandlord = dataManager.lordGet(username: username, email: email)
                         isLoggedIn = true
                         onSuccess() // Call the onSuccess closure
                     } else {

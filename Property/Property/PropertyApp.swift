@@ -1,10 +1,3 @@
-//
-//  PropertyApp.swift
-//  Property
-//
-//  Created by NAAMI COLLEGE on 04/03/2025.
-//
-
 import SwiftUI
 
 @main
