@@ -9,72 +9,100 @@ struct CreateLandlordView: View {
     @State private var email = ""
     @State private var phone = ""
     
+    // Custom color scheme
+    private let primaryColor = Color(red: 0.11, green: 0.37, blue: 0.53) // Deep Blue
+    private let secondaryColor = Color(red: 0.92, green: 0.94, blue: 0.96) // Light Gray
+    private let accentColor = Color(red: 0.20, green: 0.60, blue: 0.86) // Sky Blue
+    
     var isEditing: Bool {
         landlordToEdit != nil
     }
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 16) {
-                TextField("Landlord Name", text: $name)
-                    .padding()
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
+            VStack(spacing: 24) {
+                // Form Fields
+                VStack(spacing: 20) {
+                    CustomTextField(icon: "person.fill", placeholder: "Landlord Name", text: $name)
+                    CustomTextField(icon: "envelope.fill", placeholder: "Email Address", text: $email)
+                    CustomTextField(icon: "phone.fill", placeholder: "Phone Number", text: $phone)
+                }
+                .padding(.horizontal)
+                .padding(.top, 24)
                 
-                TextField("Landlord Email", text: $email)
-                    .padding()
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
-                
-                TextField("Phone Number", text: $phone)
-                    .padding()
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
-                
-                Button(action: {
-                    if name.isEmpty || email.isEmpty || phone.isEmpty {
-                        // Show alert if any field is empty
-                    } else {
-                        saveLandlord()
-                    }
-                }) {
+                // Action Button
+                Button(action: saveAction) {
                     Text(isEditing ? "Update Landlord" : "Add Landlord")
+                        .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(LinearGradient(gradient: Gradient(colors: [primaryColor, accentColor]),
+                                    startPoint: .leading,
+                                    endPoint: .trailing))
                         .foregroundColor(.white)
-                        .cornerRadius(10)
+                        .cornerRadius(12)
+                        .shadow(color: primaryColor.opacity(0.3), radius: 8, y: 4)
                 }
-                .padding(.top, 16)
+                .padding(.horizontal)
+                
+                Spacer()
             }
-            .padding()
-            .navigationTitle(isEditing ? "Edit Landlord" : "Add Landlord")
+            .background(secondaryColor.edgesIgnoringSafeArea(.all))
+            .navigationTitle(isEditing ? "Edit Landlord" : "New Landlord")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        showCreateLandlordView = false
-                    }
-                }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Save") {
-                        saveLandlord()
-                    }
-                    .disabled(name.isEmpty || email.isEmpty || phone.isEmpty)
+                    Button("Save") { saveAction() }
+                        .foregroundColor(primaryColor)
+                        .disabled(name.isEmpty || email.isEmpty || phone.isEmpty)
+                }
+                
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") { showCreateLandlordView = false }
+                        .foregroundColor(primaryColor)
                 }
             }
         }
-        .onAppear {
-            if let landlord = landlordToEdit {
-                name = landlord.name
-                email = landlord.email
-                phone = landlord.phone
+        .onAppear(perform: setupExistingData)
+    }
+    
+    // Custom Text Field Component
+    struct CustomTextField: View {
+        let icon: String
+        let placeholder: String
+        @Binding var text: String
+        
+        var body: some View {
+            HStack(spacing: 12) {
+                Image(systemName: icon)
+                    .foregroundColor(.gray)
+                    .frame(width: 20)
+                
+                TextField(placeholder, text: $text)
+                    .foregroundColor(.primary)
             }
+            .padding()
+            .background(Color.white)
+            .cornerRadius(10)
+            .shadow(color: Color.black.opacity(0.05), radius: 3, y: 2)
         }
     }
     
+    private func setupExistingData() {
+        guard let landlord = landlordToEdit else { return }
+        name = landlord.name
+        email = landlord.email
+        phone = landlord.phone
+    }
+    
+    private func saveAction() {
+        guard !name.isEmpty && !email.isEmpty && !phone.isEmpty else { return }
+        saveLandlord()
+    }
+    
     func saveLandlord() {
+        // Existing save logic remains unchanged
         if isEditing, let landlord = landlordToEdit {
-            // Update existing landlord
             let updatedLandlord = Landlord(
                 id: landlord.id,
                 name: name,
@@ -84,7 +112,6 @@ struct CreateLandlordView: View {
             )
             dataManager.lordUpdate(updatedLandlord)
         } else {
-            // Add new landlord
             let newLandlord = Landlord(
                 name: name,
                 email: email,

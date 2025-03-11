@@ -2,22 +2,96 @@ import SwiftUI
 
 struct UserView: View {
     @ObservedObject private var dataManager = DataManager.shared
+    @State private var showLogoutButton = false
+    @State private var isLoggedOut = false // State for navigation to UserLogin
+    
+    // Fetch the logged-in user's details
+    private var loggedInUser: User? {
+        dataManager.users.first // Assuming the first user is the logged-in user
+    }
+    
+    // Get the username or default to "Guest"
+    private var username: String {
+        loggedInUser?.name ?? "Guest"
+    }
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(spacing: 16) {
-                    // List all properties
-                    ForEach(dataManager.properties, id: \.id) { property in
-                        PropertyCardUserView(property: property)
-                            .padding(.horizontal)
+            VStack {
+                // Welcome Header
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Hey, Welcome")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                        Text("@\(username)")
+                            .font(.title2.bold())
+                            .foregroundColor(Color.blue)
                     }
+                    
+                    Spacer()
+                    
+                    // User Logo (First Letter of Username)
+                    Button(action: {
+                        withAnimation {
+                            showLogoutButton.toggle()
+                        }
+                    }) {
+                        Text(String(username.first ?? "U"))
+                            .font(.title.bold())
+                            .foregroundColor(.white)
+                            .frame(width: 50, height: 50)
+                            .background(Color.purple)
+                            .clipShape(Circle())
+                            .shadow(color: Color.purple.opacity(0.3), radius: 5, x: 0, y: 5)
+                    }
+                    .overlay(
+                        // Logout Button
+                        VStack {
+                            if showLogoutButton {
+                                Button(action: {
+                                    isLoggedOut = true // Trigger logout
+                                }) {
+                                    Text("Logout")
+                                        .font(.subheadline.bold())
+                                        .foregroundColor(.white)
+                                        .padding(.horizontal, 16)
+                                        .padding(.vertical, 8)
+                                        .background(Color.red)
+                                        .cornerRadius(10)
+                                        .shadow(color: Color.red.opacity(0.3), radius: 5, x: 0, y: 5)
+                                }
+                                .transition(.opacity)
+                                .padding(.top, 8)
+                            }
+                        }
+                        , alignment: .bottom
+                    )
                 }
-                .padding(.vertical)
+                .padding(.horizontal)
+                .padding(.top, 16)
+                
+                // List of Properties
+                ScrollView {
+                    VStack(spacing: 16) {
+                        ForEach(dataManager.properties, id: \.id) { property in
+                            PropertyCardUserView(property: property)
+                                .padding(.horizontal)
+                        }
+                    }
+                    .padding(.vertical)
+                }
+                .background(Color(.systemGray6))
             }
             .navigationTitle("Available Properties")
-            .background(Color(.systemGray6))
+            .navigationBarBackButtonHidden(true) // Hide the back button
+            .background(
+                NavigationLink(destination: UserLogin(), isActive: $isLoggedOut) {
+                    EmptyView()
+                }
+            )
         }
+        .accentColor(.purple) // Accent color for links and navigation
     }
 }
 
@@ -43,7 +117,7 @@ struct PropertyCardUserView: View {
             // Property Price
             Text("$\(property.price, specifier: "%.2f")/month")
                 .font(.subheadline.bold())
-                .foregroundColor(.green)
+                .foregroundColor(Color.green)
             
             // Contact Landlord Button
             Button(action: {
@@ -55,14 +129,14 @@ struct PropertyCardUserView: View {
                     .padding(.horizontal, 16)
                     .padding(.vertical, 10)
                     .frame(maxWidth: .infinity)
-                    .background(Color.blue)
+                    .background(Color.purple)
                     .cornerRadius(10)
-                    .shadow(color: Color.blue.opacity(0.2), radius: 4, x: 0, y: 2)
+                    .shadow(color: Color.purple.opacity(0.2), radius: 4, x: 0, y: 2)
             }
             .padding(.top, 8)
         }
         .padding()
-        .background(Color(.systemBackground))
+        .background(Color.white)
         .cornerRadius(12)
         .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
         .sheet(isPresented: $isShowingContactRequest) {
@@ -71,7 +145,6 @@ struct PropertyCardUserView: View {
         .overlay(
             Group {
                 if showSuccessMessage {
-                    
                     SuccessMessageView()
                         .transition(.opacity)
                         .onAppear {

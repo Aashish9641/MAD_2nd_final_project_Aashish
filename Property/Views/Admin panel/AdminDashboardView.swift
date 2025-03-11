@@ -6,24 +6,42 @@ struct AdminDashboardView: View {
     @State private var selectedLandlord: Landlord? = nil
     @State private var selectedLandlordsForDeletion: Set<UUID> = []
     
+    // Custom Color Scheme
+    private let primaryColor = Color(red: 0.11, green: 0.37, blue: 0.53) // Deep Blue
+    private let secondaryColor = Color(red: 0.92, green: 0.94, blue: 0.96) // Light Gray
+    private let accentColor = Color(red: 0.20, green: 0.60, blue: 0.86) // Sky Blue
+    private let destructiveColor = Color(red: 0.86, green: 0.22, blue: 0.27) // Coral Red
+    private let successColor = Color(red: 0.22, green: 0.65, blue: 0.53) // Teal Green
+    
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(spacing: 0) {
                 // Select All Button
                 if !dataManager.landlords.isEmpty {
                     HStack {
                         Button(action: toggleSelectAll) {
-                            Text(selectedLandlordsForDeletion.count == dataManager.landlords.count ? "Deselect All" : "Select All")
-                                .font(.subheadline)
-                                .foregroundColor(.white)
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 12)
-                                .background(Color.blue)
-                                .cornerRadius(8)
+                            HStack(spacing: 8) {
+                                Image(systemName: selectedLandlordsForDeletion.count == dataManager.landlords.count ?
+                                     "checkmark.circle.fill" : "circle")
+                                    .font(.system(size: 18))
+                                
+                                Text(selectedLandlordsForDeletion.count == dataManager.landlords.count ?
+                                     "Deselect All" : "Select All")
+                                    .font(.subheadline)
+                            }
+                            .foregroundColor(selectedLandlordsForDeletion.isEmpty ? primaryColor : .primary)
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 15)
+                            .background(Color(.systemBackground))
+                            .cornerRadius(10)
+                            .shadow(color: Color.black.opacity(0.05), radius: 2, y: 1)
                         }
                         Spacer()
                     }
                     .padding(.horizontal)
+                    .padding(.vertical, 12)
+                    .background(Color(.systemBackground))
+                    .shadow(color: Color.black.opacity(0.05), radius: 2, y: 2)
                 }
                 
                 // List of Landlords
@@ -38,19 +56,26 @@ struct AdminDashboardView: View {
                                 showCreateLandlordView = true
                             }
                         )
+                        .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16))
+                        .listRowBackground(Color.clear)
                     }
                 }
                 .listStyle(PlainListStyle())
+                .background(secondaryColor)
                 
                 // Delete Selected Button
                 if !selectedLandlordsForDeletion.isEmpty {
                     Button(action: deleteSelectedLandlords) {
-                        Text("Delete Selected (\(selectedLandlordsForDeletion.count))")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.red)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        HStack {
+                            Image(systemName: "trash")
+                            Text("Delete Selected (\(selectedLandlordsForDeletion.count))")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(destructiveColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                        .shadow(color: destructiveColor.opacity(0.3), radius: 8, x: 0, y: 4)
                     }
                     .padding()
                 }
@@ -60,15 +85,20 @@ struct AdminDashboardView: View {
                     selectedLandlord = nil
                     showCreateLandlordView = true
                 }) {
-                    Text("Add Landlord")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    HStack {
+                        Image(systemName: "plus.circle.fill")
+                        Text("Add Landlord")
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(successColor)
+                    .foregroundColor(.white)
+                    .cornerRadius(12)
+                    .shadow(color: successColor.opacity(0.3), radius: 8, x: 0, y: 4)
                 }
                 .padding()
             }
+            .background(secondaryColor.edgesIgnoringSafeArea(.all))
             .navigationTitle("Admin Dashboard")
             .sheet(isPresented: $showCreateLandlordView, onDismiss: {
                 selectedLandlord = nil

@@ -15,10 +15,28 @@ struct LandlordDashboard: View {
     @State private var selectedProperties: Set<String> = [] // Track selected properties
     @State private var isSelectModeActive = false // Toggle select mode
     
+    // Custom Color Scheme
+    private let primaryColor = Color(red: 0.11, green: 0.37, blue: 0.53) // Deep Blue
+    private let secondaryColor = Color(red: 0.92, green: 0.94, blue: 0.96) // Light Gray
+    private let accentColor = Color(red: 0.20, green: 0.60, blue: 0.86) // Sky Blue
+    private let destructiveColor = Color(red: 0.86, green: 0.22, blue: 0.27) // Coral Red
+    private let successColor = Color(red: 0.22, green: 0.65, blue: 0.53) // Teal Green
+    
+    @Environment(\.presentationMode) var presentationMode // For back navigation
+    
     var body: some View {
         VStack(spacing: 0) {
             // Header
             HStack {
+                // Back Button
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss() // Navigate back
+                }) {
+                    Image(systemName: "chevron.left")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                }
+                
                 Text("My Properties")
                     .font(.title2.bold())
                     .foregroundColor(.white)
@@ -49,7 +67,7 @@ struct LandlordDashboard: View {
                 .padding(.leading, 10)
             }
             .padding()
-            .background(Color.blue)
+            .background(LinearGradient(gradient: Gradient(colors: [primaryColor, accentColor]), startPoint: .leading, endPoint: .trailing))
             
             // Select All/Deselect All Buttons (Visible in Select Mode)
             if isSelectModeActive {
@@ -64,11 +82,12 @@ struct LandlordDashboard: View {
                     }) {
                         Text(selectedProperties.count == dataManager.propG(for: landlord.id).count ? "Deselect All" : "Select All")
                             .font(.subheadline.bold())
-                            .foregroundColor(.blue)
+                            .foregroundColor(primaryColor)
                             .padding(.vertical, 8)
                             .padding(.horizontal, 12)
                             .background(Color(.systemBackground))
                             .cornerRadius(8)
+                            .shadow(color: Color.black.opacity(0.05), radius: 2, y: 1)
                     }
                     
                     Spacer()
@@ -85,17 +104,18 @@ struct LandlordDashboard: View {
                         }) {
                             Text("Delete Selected")
                                 .font(.subheadline.bold())
-                                .foregroundColor(.red)
+                                .foregroundColor(destructiveColor)
                                 .padding(.vertical, 8)
                                 .padding(.horizontal, 12)
                                 .background(Color(.systemBackground))
                                 .cornerRadius(8)
+                                .shadow(color: Color.black.opacity(0.05), radius: 2, y: 1)
                         }
                     }
                 }
                 .padding(.horizontal)
                 .padding(.vertical, 8)
-                .background(Color(.systemGray6))
+                .background(secondaryColor)
             }
             
             // Property List
@@ -152,7 +172,7 @@ struct LandlordDashboard: View {
                 if showSuccessMessage {
                     Text(successMessage)
                         .padding()
-                        .background(Color.green)
+                        .background(successColor)
                         .foregroundColor(.white)
                         .cornerRadius(10)
                         .transition(.opacity)
@@ -167,9 +187,6 @@ struct LandlordDashboard: View {
     }
 }
 
-
-
-
 struct PropertyCard: View {
     let property: Property
     let isSelected: Bool
@@ -178,6 +195,13 @@ struct PropertyCard: View {
     let onDelete: () -> Void
     let onSelect: () -> Void
     
+    // Custom Color Scheme
+    private let primaryColor = Color(red: 0.11, green: 0.37, blue: 0.53) // Deep Blue
+    private let secondaryColor = Color(red: 0.92, green: 0.94, blue: 0.96) // Light Gray
+    private let accentColor = Color(red: 0.20, green: 0.60, blue: 0.86) // Sky Blue
+    private let destructiveColor = Color(red: 0.86, green: 0.22, blue: 0.27) // Coral Red
+    private let successColor = Color(red: 0.22, green: 0.65, blue: 0.53) // Teal Green
+    
     var body: some View {
         HStack(spacing: 16) {
             // Selection Checkbox (Visible in Select Mode)
@@ -185,7 +209,7 @@ struct PropertyCard: View {
                 Button(action: onSelect) {
                     Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
                         .font(.title2)
-                        .foregroundColor(isSelected ? .blue : .gray)
+                        .foregroundColor(isSelected ? primaryColor : .gray)
                 }
                 .buttonStyle(PlainButtonStyle())
             }
@@ -194,14 +218,15 @@ struct PropertyCard: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(property.address)
                     .font(.headline)
+                    .foregroundColor(.primary)
                 
                 Text(property.description)
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.secondary)
                 
                 Text("$\(property.price, specifier: "%.2f")/month")
                     .font(.subheadline.bold())
-                    .foregroundColor(.green)
+                    .foregroundColor(successColor)
             }
             
             Spacer()
@@ -214,7 +239,7 @@ struct PropertyCard: View {
                         Text("Update")
                             .padding(.horizontal, 12)
                             .padding(.vertical, 8)
-                            .background(Color.blue)
+                            .background(accentColor)
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }
@@ -225,7 +250,7 @@ struct PropertyCard: View {
                         Text("Delete")
                             .padding(.horizontal, 12)
                             .padding(.vertical, 8)
-                            .background(Color.red)
+                            .background(destructiveColor)
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }

@@ -9,15 +9,19 @@ class DataManager: ObservableObject {
     // adding the published properties to notify when make changes
     @Published var landlords: [Landlord] = [] // lists of the landlords
     @Published var properties: [Property] = [] //  lists of properties using global
+    @Published var users:[User] = [] // list of properties using global
     
     private let KeyLord = "landlords" // using key for landlord information
     private let KeyProp = "properties" // using key for properties information
+    private let keyUse = "users" // using key for user information
     
     // using private initilizer to follow skeleton pattern
     private init() {
         landLoad() // loading lanlord information from userdefault
         propLoad() // 	load properties daya from userdefault
+        userLoad()// loading the user data from userdefault
     }
+    
     
 // begin landlord data from dafault user
     private func landLoad() {
@@ -34,6 +38,13 @@ class DataManager: ObservableObject {
         }
     }
     
+    private func userLoad() {
+        if let data = UserDefaults.standard.data(forKey: keyUse),
+           let decoded = try? JSONDecoder().decode([User].self, from: data) {
+            users = decoded
+        }
+    }
+    
     private func landSaver() { // Saving the landlord data to user defaults side
         if let encoded = try? JSONEncoder().encode(landlords) { // encoding array landlord to dataset
             
@@ -44,6 +55,12 @@ class DataManager: ObservableObject {
     private func PropSaver() {
         if let encoded = try? JSONEncoder().encode(properties) { // using encode way to property array to datasets
             UserDefaults.standard.set(encoded, forKey: KeyProp) // Save encoded data to dafault user
+        }
+    }
+    
+    private func userSaver() {
+        if let encoded = try? JSONEncoder().encode(users) {
+            UserDefaults.standard.set(encoded, forKey: keyUse)
         }
     }
     
@@ -115,4 +132,25 @@ class DataManager: ObservableObject {
             properties.first { $0.id == propertyID } //Returung property object to every id
         }
     }
+ // function to add new user with name, email and passowrd
+    func addUser(name: String, email: String, password: String) -> Bool {
+        if users.contains(where: { $0.email == email }) { // check if the user with the email already exisit or not
+            return false // User already exists and it return false
+        }
+        // create new object wiht provied inforamtion
+        let newUser = User(name: name, email: email, password: password)
+        users.append(newUser) // linking new user to user array
+        userSaver() // saving the updated list
+        return true // if successful added then true returns
+    }
+    // function to verfir if the user existi with pre defined email and passowrd
+    func validateUser(email: String, password: String) -> Bool {
+        // check if the user iwht given mail and passowrd in user list
+        return users.contains { $0.email == email && $0.password == password }
+    }
+     // make function to check user wih a partilcur email address
+    func userExists(email: String) -> Bool {
+        return users.contains { $0.email == email } // it return true  with specified email and passsowrd
+    }
 }
+

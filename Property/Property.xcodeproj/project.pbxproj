@@ -28,6 +28,7 @@
 		C577D1952D76DCEA003ABEEB /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C577D1942D76DCEA003ABEEB /* DataManager.swift */; };
 		C577D1972D76DDF2003ABEEB /* LandlordDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C577D1962D76DDF2003ABEEB /* LandlordDashboard.swift */; };
 		C577D1992D76DE24003ABEEB /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C577D1982D76DE24003ABEEB /* UserView.swift */; };
+		C57879622D7E95F80035AE59 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57879612D7E95F80035AE59 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		C577D1942D76DCEA003ABEEB /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 1; };
 		C577D1962D76DDF2003ABEEB /* LandlordDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandlordDashboard.swift; sourceTree = "<group>"; };
 		C577D1982D76DE24003ABEEB /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		C57879612D7E95F80035AE59 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +197,7 @@
 			children = (
 				C577D17C2D76DAF9003ABEEB /* Property.swift */,
 				C577D17E2D76DB06003ABEEB /* Landlord.swift */,
+				C57879612D7E95F80035AE59 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				C577D17F2D76DB06003ABEEB /* Landlord.swift in Sources */,
 				C571787A2D781027004AA19E /* LandlordLogin.swift in Sources */,
 				C577D14E2D76C912003ABEEB /* ContentView.swift in Sources */,
+				C57879622D7E95F80035AE59 /* User.swift in Sources */,
 				C577D14C2D76C912003ABEEB /* PropertyApp.swift in Sources */,
 				C577D1952D76DCEA003ABEEB /* DataManager.swift in Sources */,
 				C577D1852D76DB9B003ABEEB /* AdminDashboardView.swift in Sources */,
