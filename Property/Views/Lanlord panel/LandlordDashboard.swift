@@ -16,7 +16,7 @@ struct LandlordDashboard: View {
     @State private var isSelectModeActive = false // Toggle select mode
     
     // Custom Color Scheme
-    private let primaryColor = Color(red: 0.11, green: 0.37, blue: 0.53) // Deep Blue
+    private let ColorP = Color(red: 0.11, green: 0.37, blue: 0.53) // Deep Blue
     private let secondaryColor = Color(red: 0.92, green: 0.94, blue: 0.96) // Light Gray
     private let accentColor = Color(red: 0.20, green: 0.60, blue: 0.86) // Sky Blue
     private let destructiveColor = Color(red: 0.86, green: 0.22, blue: 0.27) // Coral Red
@@ -67,7 +67,7 @@ struct LandlordDashboard: View {
                 .padding(.leading, 10)
             }
             .padding()
-            .background(LinearGradient(gradient: Gradient(colors: [primaryColor, accentColor]), startPoint: .leading, endPoint: .trailing))
+            .background(LinearGradient(gradient: Gradient(colors: [ColorP, accentColor]), startPoint: .leading, endPoint: .trailing))
             
             // Select All/Deselect All Buttons (Visible in Select Mode)
             if isSelectModeActive {
@@ -82,7 +82,7 @@ struct LandlordDashboard: View {
                     }) {
                         Text(selectedProperties.count == dataManager.propG(for: landlord.id).count ? "Deselect All" : "Select All")
                             .font(.subheadline.bold())
-                            .foregroundColor(primaryColor)
+                            .foregroundColor(ColorP)
                             .padding(.vertical, 8)
                             .padding(.horizontal, 12)
                             .background(Color(.systemBackground))
@@ -196,7 +196,7 @@ struct PropertyCard: View {
     let onSelect: () -> Void
     
     // Custom Color Scheme
-    private let primaryColor = Color(red: 0.11, green: 0.37, blue: 0.53) // Deep Blue
+    private let ColorP = Color(red: 0.11, green: 0.37, blue: 0.53) // Deep Blue
     private let secondaryColor = Color(red: 0.92, green: 0.94, blue: 0.96) // Light Gray
     private let accentColor = Color(red: 0.20, green: 0.60, blue: 0.86) // Sky Blue
     private let destructiveColor = Color(red: 0.86, green: 0.22, blue: 0.27) // Coral Red
@@ -209,7 +209,7 @@ struct PropertyCard: View {
                 Button(action: onSelect) {
                     Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
                         .font(.title2)
-                        .foregroundColor(isSelected ? primaryColor : .gray)
+                        .foregroundColor(isSelected ? ColorP : .gray)
                 }
                 .buttonStyle(PlainButtonStyle())
             }

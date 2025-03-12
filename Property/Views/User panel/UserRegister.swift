@@ -5,9 +5,9 @@ struct UserRegister: View {
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPassword = ""
-    @State private var errorMessage = ""
-    @State private var showSuccessMessage = false
-    @State private var navigateToLogin = false
+    @State private var throwEr = ""
+    @State private var mshowUs = false
+    @State private var gotoLogin = false
     
     @ObservedObject private var dataManager = DataManager.shared
     
@@ -15,20 +15,20 @@ struct UserRegister: View {
         ZStack {
             // Background Gradient
             LinearGradient(
-                gradient: Gradient(colors: [Color(red: 0.1, green: 0.3, blue: 0.6), Color(red: 0.2, green: 0.5, blue: 0.8)]),
+                gradient: Gradient(colors: [Color(red: 0.2, green: 0.4, blue: 0.5), Color(red: 0.2, green: 0.4, blue: 0.7)]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
             .edgesIgnoringSafeArea(.all)
             
             // Main Content
-            VStack(spacing: 20) {
+            VStack(spacing: 14) {
                 // Title
                 Text("User Register")
-                    .font(.system(size: 36, weight: .bold, design: .rounded))
+                    .font(.system(size: 35, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
-                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
-                    .padding(.top, 40)
+                    .shadow(color: .black.opacity(0.2), radius: 6, x: 0, y: 4)
+                    .padding(.top, 39)
                 
                 // Name Field
                 TextField("Name", text: $name)
@@ -57,16 +57,16 @@ struct UserRegister: View {
                 // Password Field
                 SecureField("Password", text: $password)
                     .padding()
-                    .background(Color.white.opacity(0.3))
-                    .cornerRadius(10)
+                    .background(Color.white.opacity(0.4))
+                    .cornerRadius(11)
                     .foregroundColor(.white)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.white.opacity(0.5), lineWidth: 1)
+                        RoundedRectangle(cornerRadius: 11)
+                            .stroke(Color.white.opacity(0.6), lineWidth: 1)
                     )
                 
                 // Confirm Password Field
-                SecureField("Confirm Password", text: $confirmPassword)
+                SecureField("Confirm your Password", text: $confirmPassword)
                     .padding()
                     .background(Color.white.opacity(0.3))
                     .cornerRadius(10)
@@ -77,12 +77,12 @@ struct UserRegister: View {
                     )
                 
                 // Error Message
-                if !errorMessage.isEmpty {
-                    ErrorMessage(text: errorMessage)
+                if !throwEr.isEmpty {
+                    ThrowEr(text: throwEr)
                 }
                 
                 // Register Button
-                Button(action: handleRegister) {
+                Button(action: sideReg) {
                     HStack {
                         Text("REGISTER")
                             .font(.headline)
@@ -92,7 +92,7 @@ struct UserRegister: View {
                     .background(LinearGradient(gradient: Gradient(colors: [Color(red: 0.2, green: 0.8, blue: 0.6), Color(red: 0.1, green: 0.6, blue: 0.8)]), startPoint: .leading, endPoint: .trailing))
                     .foregroundColor(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .shadow(color: Color(red: 0.2, green: 0.8, blue: 0.6).opacity(0.3), radius: 10, x: 0, y: 10)
+                    .shadow(color: Color(red: 0.2, green: 0.7, blue: 0.6).opacity(0.3), radius: 11, x: 0, y: 10)
                 }
                 .padding(.vertical, 20)
                 
@@ -100,17 +100,17 @@ struct UserRegister: View {
             }
             .padding(.horizontal, 30)
         }
-        .alert(isPresented: $showSuccessMessage) {
+        .alert(isPresented: $mshowUs) {
             Alert(
                 title: Text("Success"),
                 message: Text("Registration successful! You will be redirected to the login page."),
                 dismissButton: .default(Text("OK")) {
-                    navigateToLogin = true
+                    gotoLogin = true
                 }
             )
         }
         .background(
-            NavigationLink(destination: UserLogin(), isActive: $navigateToLogin) {
+            NavigationLink(destination: UserLogin(), isActive: $gotoLogin) {
                 EmptyView()
             }
         )
@@ -119,24 +119,24 @@ struct UserRegister: View {
     
     // MARK: - Helper Functions
     
-    private func handleRegister() {
-        if validateFields() {
-            if dataManager.addUser(name: name, email: email, password: password) {
-                showSuccessMessage = true
+    private func sideReg() {
+        if rightFie() {
+            if dataManager.plusUse(name: name, email: email, password: password) {
+                mshowUs = true
             } else {
-                errorMessage = "Email already exists."
+                throwEr = "provided enmail is  already exists."
             }
         }
     }
     
-    private func validateFields() -> Bool {
+    private func rightFie() -> Bool {
         if name.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty {
-            errorMessage = "Please fill in all fields."
+            throwEr = "Please fill in all fields."
             return false
         }
         
         if password != confirmPassword {
-            errorMessage = "Passwords do not match."
+            throwEr = "Passwords do not match."
             return false
         }
         
@@ -146,7 +146,7 @@ struct UserRegister: View {
 
 // MARK: - Reusable Components
 
-struct ErrorMessage: View {
+struct ThrowEr: View {
     let text: String
     
     var body: some View {

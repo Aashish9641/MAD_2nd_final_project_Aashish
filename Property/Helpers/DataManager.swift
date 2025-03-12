@@ -26,22 +26,22 @@ class DataManager: ObservableObject {
 // begin landlord data from dafault user
     private func landLoad() {
         if let data = UserDefaults.standard.data(forKey: KeyLord),// follow retriving data for landlord parts
-           let decoded = try? JSONDecoder().decode([Landlord].self, from: data) { // decoding data to landlord panel
-            landlords = decoded // Assigned data decode to the arry of landlord
+           let deco = try? JSONDecoder().decode([Landlord].self, from: data) { // decoding data to landlord panel
+            landlords = deco // Assigned data decode to the arry of landlord
         }
     }
     // loading the properties from user default side
     private func propLoad() {
         if let data = UserDefaults.standard.data(forKey: KeyProp),// follow retriving data for properties part
-           let decoded = try? JSONDecoder().decode([Property].self, from: data) { // using decoding data to properties panel
-            properties = decoded // Assigning the decode data to properties section
+           let deco = try? JSONDecoder().decode([Property].self, from: data) { // using decoding data to properties panel
+            properties = deco // Assigning the decode data to properties section
         }
     }
     
     private func userLoad() {
         if let data = UserDefaults.standard.data(forKey: keyUse),
-           let decoded = try? JSONDecoder().decode([User].self, from: data) {
-            users = decoded
+           let deco = try? JSONDecoder().decode([User].self, from: data) {
+            users = deco
         }
     }
     
@@ -133,23 +133,23 @@ class DataManager: ObservableObject {
         }
     }
  // function to add new user with name, email and passowrd
-    func addUser(name: String, email: String, password: String) -> Bool {
+    func plusUse(name: String, email: String, password: String) -> Bool {
         if users.contains(where: { $0.email == email }) { // check if the user with the email already exisit or not
             return false // User already exists and it return false
         }
         // create new object wiht provied inforamtion
-        let newUser = User(name: name, email: email, password: password)
-        users.append(newUser) // linking new user to user array
+        let UseLatest = User(name: name, email: email, password: password)
+        users.append(UseLatest) // linking new user to user array
         userSaver() // saving the updated list
         return true // if successful added then true returns
     }
     // function to verfir if the user existi with pre defined email and passowrd
-    func validateUser(email: String, password: String) -> Bool {
+    func useVal(email: String, password: String) -> Bool {
         // check if the user iwht given mail and passowrd in user list
         return users.contains { $0.email == email && $0.password == password }
     }
      // make function to check user wih a partilcur email address
-    func userExists(email: String) -> Bool {
+    func alE(email: String) -> Bool {
         return users.contains { $0.email == email } // it return true  with specified email and passsowrd
     }
 }
