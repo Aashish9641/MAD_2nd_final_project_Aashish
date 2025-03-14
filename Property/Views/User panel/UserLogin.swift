@@ -1,141 +1,142 @@
-import SwiftUI
+import SwiftUI // Importing the UI of swift
 
-struct UserLogin: View {
-    @State private var email = ""
-    @State private var password = ""
-    @State private var mesDispla = ""
-    @State private var isRegisterActive = false
-    @State private var okLogi = false
+// Begin the user login section
+struct UserLogin: View { // Setting Several variables states
+    @State private var email = "" // Stores the email of the user
+    @State private var password = "" // Keep the password of user
+    @State private var mesDispla = "" // shows error or store informational data
+    @State private var wannaRegister = false // Nav contopller for register the user
+    @State private var okLogi = false // nav to main app screen after successful
     
+    // Using the observed object to manage the shared data from data manager like authentication
     @ObservedObject private var dataManager = DataManager.shared
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                // Background Gradient
+        NavigationView { // bring nav view to wrap up
+            ZStack { // layer backround and content
+                // beginm backgropund section
                 LinearGradient(
-                    gradient: Gradient(colors: [Color.blue.opacity(0.7), Color.purple.opacity(0.7)]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
+                    gradient: Gradient(colors: [Color.blue.opacity(0.7), Color.purple.opacity(0.7)]), // adjust different graident color for better visulation
+                    startPoint: .topLeading, // add the direction or way of graident
+                    endPoint: .bottomTrailing // add endpoint in bottm side
                 )
-                .edgesIgnoringSafeArea(.all)
+                .edgesIgnoringSafeArea(.all) // expand the edge of the screen
                 
-                // Main Content
-                VStack(spacing: 19) {
-                    // Title
-                    Text("User Login")
-                        .font(.system(size: 35, weight: .bold, design: .rounded))
-                        .foregroundColor(.white)
-                        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 4)
-                        .padding(.top, 39)
+                // Major content are here
+                VStack(spacing: 19) { // add vertical stack between differnet componenets
+                    // Title of login user
+                    Text("User Login") // title messgae
+                        .font(.system(size: 34, weight: .bold, design: .rounded)) // adding the custom font for better visual
+                        .foregroundColor(.white) // make the text color as white
+                        .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5) // adjust the text shadow
+                        .padding(.top, 39) // set padding in top side
                     
-                    // Email Field
-                    TextField("Email", text: $email)
-                        .padding()
-                        .background(Color.white.opacity(0.2))
-                        .cornerRadius(10)
-                        .keyboardType(.emailAddress)
-                        .autocapitalization(.none)
-                        .foregroundColor(.white)
+                    // insert  the Email section
+                    TextField("Email", text: $email) // text part to write email
+                        .padding()// adjust  the required padding
+                        .background(Color.white.opacity(0.2)) // making semi tranp and add color
+                        .cornerRadius(10) // fixing the radius or border
+                        .keyboardType(.emailAddress) // fix keyboard type to email
+                        .autocapitalization(.none)// Not enabling the auto capatial
+                        .foregroundColor(.white) // add white as text color
                     
-                    // Password Field
-                    SecureField("Password", text: $password)
-                        .padding()
-                        .background(Color.white.opacity(0.2))
-                        .cornerRadius(10)
-                        .foregroundColor(.white)
+                    // Insert Password Section
+                    SecureField("Password", text: $password) // text part to write password
+                        .padding() // adjust  the required padding
+                        .background(Color.white.opacity(0.2)) // making semi tranp and add color
+                        .cornerRadius(10) // fixing the radius or border
+                        .foregroundColor(.white) // add white as text color
                     
-                    // Error Message
-                    if !mesDispla.isEmpty {
-                        ErmSm(text: mesDispla)
+                    // Display the error message logic
+                    if !mesDispla.isEmpty { // when the mesDisplay is no nil then show the erroe message
+                        ErmSm(text: mesDispla) // using the reusable componenets
                     }
                     
-                    // Login Button
-                    Button(action: partLog) {
+                    // Logic for login button
+                    Button(action: partLog) { // Action to get the icon
                         HStack {
-                            Text("LOGIN")
-                                .font(.headline)
-                                .frame(maxWidth: .infinity)
+                            Text("LOGIN") // login message
+                                .font(.headline) // adding the bold font
+                                .frame(maxWidth: .infinity) // making the button in full width
                         }
-                        .padding()
-                        .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
-                        .foregroundColor(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 14))
-                        .shadow(color: Color.blue.opacity(0.4), radius: 11, x: 0, y: 11)
+                        .padding() // add necessay padding
+                        .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing)) // adding the custom gradient for background
+                        .foregroundColor(.white) // text is in white color
+                        .clipShape(RoundedRectangle(cornerRadius: 14)) // making the rounded corners and add radius
+                        .shadow(color: Color.blue.opacity(0.4), radius: 11, x: 0, y: 11) // declare the shadow
                     }
-                    .padding(.vertical, 19)
+                    .padding(.vertical, 19) // vertical side padding
                     
-                    // Register Link
+                    // adding the link of register user
                     HStack {
-                        Text("Don't have an account?")
-                            .foregroundColor(.white)
-                            .font(.subheadline)
+                        Text("Don't have an account?") // text display if the user don't have aacount
+                            .foregroundColor(.white) //text color as white
+                            .font(.subheadline) // font size as subheading
                         
-                        NavigationLink(destination: UserRegister(), isActive: $isRegisterActive) {
-                            Text("Register")
-                                .font(.subheadline)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .underline()
+                        NavigationLink(destination: UserRegister(), isActive: $wannaRegister) { // if the register user is true then navigate top user Register panel
+                            Text("Register Here") // Text with link
+                                .font(.subheadline) // implement size of font
+                                .fontWeight(.bold) // add bold weight
+                                .foregroundColor(.white) // text color as white
+                                .underline() // used uderline for clickable
                         }
                     }
                     
-                    Spacer()
+                    Spacer() // throw content at top side of screen
                 }
-                .padding(.horizontal, 29)
+                .padding(.horizontal, 29) // adjust the padding in horizontal side
             }
-            .navigationBarHidden(true)
+            .navigationBarHidden(true) // hiding the nav bar on screen
             .background(
-                NavigationLink(destination: UserView(), isActive: $okLogi) {
-                    EmptyView()
+                NavigationLink(destination: UserView(), isActive: $okLogi) { // move to user view of okLogi is true
+                    EmptyView() // hidden nav  link
                 }
             )
         }
     }
     
-    // MARK: - Helper Functions
-    
+    // add function to manage the login section
     private func partLog() {
-        if valFir() {
-            if dataManager.useVal(email: email, password: password) {
-                okLogi = true // Directly trigger navigation
+        if valFir() { // validate the user input parts
+            if dataManager.useVal(email: email, password: password) { // add the validate user data
+                okLogi = true // go to main section of app screen
             } else {
-                mesDispla = "Invalid email or password."
+                mesDispla = "Invalid email or password." // if the data are invalid then display the message
             }
         }
     }
-    
+    // Add function to verify the input section
     private func valFir() -> Bool {
-        if email.isEmpty || password.isEmpty {
-            mesDispla = "Please fill in all required fields."
+        if email.isEmpty || password.isEmpty { // verify if any part is nil
+            mesDispla = "Please fill in all required fields." // throw and set the error messgae
             return false
         }
-        return true
+        return true // if the validation is success
     }
 }
 
 
-// MARK: - Reusable Components
-
+// using the reusable elements
 struct ErmSm: View {
-    let text: String
+    let text: String // fix text for error message
     
     var body: some View {
         HStack {
-            Image(systemName: "exclamationmark.triangle.fill")
-                .foregroundColor(.red)
-            Text(text)
-                .font(.caption)
-                .foregroundColor(.red)
+            Image(systemName: "exclamationmark.triangle.fill") // adding the warning image
+                .foregroundColor(.red) //add the red color of that image
+            Text(text) // text for error message
+                .font(.caption) // making the font size small
+                .foregroundColor(.red) // text in red color
         }
-        .padding(10)
-        .background(Color.red.opacity(0.1))
-        .cornerRadius(8)
+        .padding(10) // adding the padding
+        .background(Color.red.opacity(0.1)) // light red color adding in background
+        .cornerRadius(8) // add trhe rounded corners
     }
 }
 
+// User 
 struct UserLogin_Previews: PreviewProvider {
     static var previews: some View {
-        UserLogin()
+        UserLogin() // previwing the user login view
     }
 }

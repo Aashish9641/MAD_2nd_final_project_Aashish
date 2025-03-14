@@ -50,7 +50,7 @@ struct UserView: View {
                         VStack {
                             if btnLogout {
                                 Button(action: {
-                                    outLog = true // Trigger logout whenm clicking button
+                                    outLog = true // Trigger logout when clicking button
                                 }) {
                                     Text("Logout") // set label for the button
                                         .font(.subheadline.bold()) // add style font
@@ -171,86 +171,86 @@ struct cardPropp: View {
                             }
                         }
                 }
-            }, alignment: .top // placing the sucess messgae at top teh card
+            }, alignment: .top // placing the sucess messgae at top the card
         )
     }
 }
 
-// Contact Request View (Fragment/Reusable Component)
-struct conrVi: View {
-    let property: Property
-    @Binding var isShowing: Bool
-    @Binding var textSuccess: Bool
+// Contact Request View  panel using fragment
+struct conrVi: View { // Contacting  the request
+    let property: Property // passing the details of property
+    @Binding var isShowing: Bool // adding the control visibility
+    @Binding var textSuccess: Bool // for successful submission
     
-    @State private var cordinateText = ""
+    @State private var cordinateText = "" // storing the messeage send  by user to landlord
     
     var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("Property Details").font(.headline)) {
-                    Text(property.address)
-                        .font(.subheadline)
-                    Text(property.description)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text("$\(property.price, specifier: "%.2f")/month")
-                        .font(.subheadline.bold())
-                        .foregroundColor(.green)
+        NavigationView { //Wrapping in the navigation view
+            Form { // using container in form section
+                Section(header: Text("Property Details").font(.headline)) { // Section indicate propety panel
+                    Text(property.address) // show the address of prop
+                        .font(.subheadline) // for subheadline font
+                    Text(property.description) // show the descriptiomn of property
+                        .font(.subheadline) // adding subheading font
+                        .foregroundColor(.gray) // set forground color as gray
+                    Text("$\(property.price, specifier: "%.2f")") // show the price of the property
+                        .font(.subheadline.bold()) // making font bold
+                        .foregroundColor(.green) // add the green cvolor
                 }
                 
-                Section(header: Text("Your Message").font(.headline)) {
-                    TextEditor(text: $cordinateText)
-                        .frame(height: 150)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                Section(header: Text("Your Message").font(.headline)) { // added header for input text message
+                    TextEditor(text: $cordinateText) // multi line text input section
+                        .frame(height: 149) // fixing height as 149
+                        .overlay( // add overlay for border
+                            RoundedRectangle(cornerRadius: 7) // add rounded corner for border side
+                                .stroke(Color.gray.opacity(0.3), lineWidth: 1) // add gary color with 0.3 opacity
                         )
                 }
             }
-            .navigationTitle("Contact Landlord")
-            .toolbar {
+            .navigationTitle("Contact to the Landlord") // Declare the title for contact part
+            .toolbar { // for button navigation bar
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        isShowing = false
+                    Button("Wanna Cancel") { // adding the cancel option
+                        isShowing = false // code to dismiss the view or action
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Send") {
-                        wannCont()
-                        isShowing = false
-                        textSuccess = true
+                ToolbarItem(placement: .navigationBarTrailing) { // bypass the button in trailing part
+                    Button("Send") { // for sending button
+                        wannCont() // fixing the contact request function part
+                        isShowing = false // after sending dismisson
+                        textSuccess = true // verify the successful
                     }
-                    .disabled(cordinateText.isEmpty)
+                    .disabled(cordinateText.isEmpty) // show the button if the message sent
                 }
             }
         }
     }
     
-    private func wannCont() {
-        // Simulate sending a contact request
-        print("Contact request sent for property: \(property.address)")
-        print("Message: \(cordinateText)")
-        // You can implement actual logic here (e.g., send an email or save to a database)
+    private func wannCont() { // function to contact part
+        // adding  sending a contact request to landlords
+        print("Contact request sent for property: \(property.address)") // declare the porperty address
+        print("Message: \(cordinateText)") //Here logs the message of username
     }
 }
 
-// Success Message View (Fragment/Reusable Component)
-struct showOk: View {
+// Success Message View after sending request
+struct showOk: View { // for successmessage visulization
     var body: some View {
-        Text("Message Sent Successfully! we will contact you soon")
-            .font(.subheadline.bold())
-            .foregroundColor(.white)
-            .padding()
-            .background(Color.green)
-            .cornerRadius(10)
-            .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
-            .padding(.top, 16)
-            .transition(.opacity)
+        Text("Message Sent Successfully! we will contact you soon") // show the text of success message
+            .font(.subheadline.bold()) // making it bold
+            .foregroundColor(.white) // add the color as white
+            .padding() // fixing the padding
+            .background(Color.green) // green background color as green
+            .cornerRadius(11) // set corner radius
+            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)  // for shadow purpose adding this
+            .padding(.top, 17) // add the top side padding
+            .transition(.opacity) // using opacity for transition
     }
 }
 
+// for Code canvas using user perviews
 struct UserView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserView()
+    static var previews: some View { // perviewing the user panel
+        UserView() // perview the user side 
     }
 }

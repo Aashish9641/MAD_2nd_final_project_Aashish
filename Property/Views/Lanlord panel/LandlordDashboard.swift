@@ -154,14 +154,14 @@ struct LandlordDashboard: View {
         }
         .sheet(isPresented: $showPropertyForm) {
             PropertyFormView(
-                showPropertyForm: $showPropertyForm,
+                showFor: $showPropertyForm,
                 dataManager: dataManager,
                 landlord: landlord,
-                selectedProperty: $selectedProperty,
-                showSuccessMessage: $showSuccessMessage,
-                successMessage: $successMessage,
-                showError: $showError,
-                errorMessage: $errorMessage
+                chooseProp: $selectedProperty,
+                messSuccess:$showSuccessMessage,
+                sucMsg: $successMessage,
+                thrErr: $showError,
+                msgErr: $errorMessage
             )
         }
         .alert(isPresented: $showError) {

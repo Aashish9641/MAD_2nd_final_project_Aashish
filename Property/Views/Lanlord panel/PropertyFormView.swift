@@ -1,21 +1,21 @@
 import UIKit
 import SwiftUI
 struct PropertyFormView: View {
-    @Binding var showPropertyForm: Bool
+    @Binding var showFor: Bool
     @ObservedObject var dataManager: DataManager
     let landlord: Landlord
-    @Binding var selectedProperty: Property?
-    @Binding var showSuccessMessage: Bool
-    @Binding var successMessage: String
-    @Binding var showError: Bool
-    @Binding var errorMessage: String
+    @Binding var chooseProp: Property?
+    @Binding var messSuccess: Bool
+    @Binding var sucMsg: String
+    @Binding var thrErr: Bool
+    @Binding var msgErr: String
     
     @State private var address = ""
     @State private var description = ""
     @State private var price = ""
     
-    var isEditing: Bool {
-        selectedProperty != nil
+    var editM: Bool {
+        chooseProp != nil
     }
     
     var body: some View {
@@ -26,8 +26,8 @@ struct PropertyFormView: View {
                 TextField("Price", text: $price)
                     .keyboardType(.decimalPad)
                 
-                Button(action: saveProperty) {
-                    Text(isEditing ? "Update Property" : "Add Property")
+                Button(action: propS) {
+                    Text(editM ? "Update Property" : "Add Property")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.blue)
@@ -35,16 +35,16 @@ struct PropertyFormView: View {
                         .cornerRadius(10)
                 }
             }
-            .navigationTitle(isEditing ? "Edit Property" : "Add Property")
+            .navigationTitle(editM ? "Edit Property" : "Add Property")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        showPropertyForm = false
+                        showFor = false
                     }
                 }
             }
             .onAppear {
-                if let property = selectedProperty {
+                if let property = chooseProp {
                     address = property.address
                     description = property.description
                     price = String(property.price)
@@ -53,24 +53,24 @@ struct PropertyFormView: View {
         }
     }
     
-    func saveProperty() {
+    func propS() {
         guard !address.isEmpty, !description.isEmpty, let priceValue = Double(price) else {
-            showError = true
-            errorMessage = "All fields are required and price must be a valid number."
+            thrErr = true
+            msgErr = "All fields are required and price must be a valid number."
             return
         }
         
-        if isEditing, let property = selectedProperty {
-            let updatedProperty = Property(id: property.id, address: address, description: description, price: priceValue)
-            dataManager.propModify(updatedProperty, for: landlord.id)
-            successMessage = "Property updated successfully!"
+        if editM, let property = chooseProp {
+            let modiProp = Property(id: property.id, address: address, description: description, price: priceValue)
+            dataManager.propModify(modiProp, for: landlord.id)
+            sucMsg = "Property updated successfully!"
         } else {
-            let newProperty = Property(id: UUID().uuidString, address: address, description: description, price: priceValue)
-            dataManager.propPlus(newProperty, for: landlord.id)
-            successMessage = "Property added successfully!"
+            let latestPro = Property(id: UUID().uuidString, address: address, description: description, price: priceValue)
+            dataManager.propPlus(latestPro, for: landlord.id)
+            sucMsg = "Property added successfully!"
         }
         
-        showPropertyForm = false
-        showSuccessMessage = true
+        showFor = false
+        messSuccess = true
     }
 }

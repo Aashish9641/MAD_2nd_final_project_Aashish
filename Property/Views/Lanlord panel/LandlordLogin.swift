@@ -12,7 +12,7 @@ struct LandlordLogin: View {
     // Custom Color Scheme
     private let primaryColor = Color(red: 0.11, green: 0.37, blue: 0.53) // Deep Blue
     private let secondaryColor = Color(red: 0.92, green: 0.94, blue: 0.96) // Light Gray
-    private let successColor = Color(red: 0.22, green: 0.65, blue: 0.53) // Teal Green
+    private let successColor = Color(red: 0.23, green: 0.64, blue: 0.53) // Teal Green
     
     var onSuccess: () -> Void // Callback for successful login
     
