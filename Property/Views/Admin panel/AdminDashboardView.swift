@@ -49,9 +49,9 @@ struct AdminDashboardView: View {
                     ForEach(dataManager.landlords) { landlord in
                         LandlordRow(
                             landlord: landlord,
-                            isSelected: selectedLandlordsForDeletion.contains(landlord.id),
-                            onSelect: { toggleSelection(for: landlord.id) },
-                            onUpdate: {
+                            hasChoose: selectedLandlordsForDeletion.contains(landlord.id),
+                            selecOn: { toggleSelection(for: landlord.id) },
+                            modifyO: {
                                 selectedLandlord = landlord
                                 showCreateLandlordView = true
                             }
