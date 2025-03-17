@@ -133,7 +133,7 @@ struct cardPropp: View {
                 .lineLimit(2) // Limit description in  2 lines
             
             // Delcaration Property Price
-            Text("NRP\(property.price, specifier: "%.2f")") // show the price added by landlord
+            Text("NPR \(property.price, specifier: "%.2f")") // show the price added by landlord
                 .font(.subheadline.bold()) // making the font
                 .foregroundColor(Color.green) // add the green color price
             
@@ -193,7 +193,7 @@ struct conrVi: View { // Contacting  the request
                     Text(property.description) // show the descriptiomn of property
                         .font(.subheadline) // adding subheading font
                         .foregroundColor(.gray) // set forground color as gray
-                    Text("$\(property.price, specifier: "%.2f")") // show the price of the property
+                    Text("NPR \(property.price, specifier: "%.2f")") // show the price of the property
                         .font(.subheadline.bold()) // making font bold
                         .foregroundColor(.green) // add the green cvolor
                 }

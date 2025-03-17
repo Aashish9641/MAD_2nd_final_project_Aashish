@@ -224,7 +224,7 @@ struct ppoeCa: View { // add custom property to show
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
-                Text("$\(property.price, specifier: "%.2f")/month") // for pricing the property
+                Text("NPR \(property.price, specifier: "%.2f")") // for pricing the property
                     .font(.subheadline.bold()) // making it bold and add font
                     .foregroundColor(sspM) // add the text color
             }
